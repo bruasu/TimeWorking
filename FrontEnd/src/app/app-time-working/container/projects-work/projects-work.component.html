@@ -1,0 +1,86 @@
+<main class="app-content">
+        <div class="app-title">
+          <div>
+            <h1><i class="fa fa-dashboard"></i> Projects Work</h1>
+            <p>projects in which I work</p>
+          </div>
+          <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="#">Projects Work</a></li>
+          </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="tile">
+                <h3 class="tile-title">Add Project Work</h3>
+                <form action="">
+                    <div class="form-group">
+                    <label for="">Name:
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="name" name="name">
+                    </div>
+                    <div class="form-group">
+                    <button class="btn btn-primary btn-block" (click)="eventClickInsert()">Submit</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+            <div class="col-md-6" *ngIf="viewList">
+                <div class="tile">
+                    <h3 class="tile-title">List Projects Works</h3>
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th>Edit</th>
+                          <th>Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let project_work of projects_works">
+                          <th>{{project_work.id_project_work}}</th>
+                          <th>{{project_work.name}}</th>
+                          <th><button class="btn btn-primary btn-sm" (click)="eventClickEdit(project_work)">Edit</button></th>
+                          <th><button class="btn btn-danger btn-sm" (click)="eventClickDelete(project_work)">Delete</button></th>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6" *ngIf="viewEdit">
+                <div class="tile">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Project Work</h4>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="viewListEventClick()"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+                      <h6>Present Name: <span class="text-danger">{{project_work.name}}</span></h6>
+                      <input type="text" class="form-control" name="nameEdit" [(ngModel)]="nameEdit">
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-primary btn-block" (click)="updateProjectWork()">Update</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" *ngIf="viewDelete">
+                <div class="tile">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h4 class="modal-title">Delete Project Work</h4>
+                          <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="viewListEventClick()"><span aria-hidden="true">×</span></button>
+                      </div>
+                      <div class="modal-body">
+                          <h6>Delete a Project Work, Name: <span class="text-danger">{{project_work.name}}</span></h6>
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-danger" (click)="deleteProjectWork()">YES</button>
+                          <button class="btn btn-primary" (click)="viewListEventClick()">NO</button>
+                        </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+</main>

@@ -1,0 +1,64 @@
+<main class="app-content">
+        <div class="app-title">
+          <div>
+            <h1><i class="fa fa-dashboard"></i> Time Working</h1>
+            <p>here we record working hours</p>
+          </div>
+          <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="#">Time Working</a></li>
+          </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-6" *ngIf="!viewTimeWorking">
+                <div class="tile">
+                <h3 class="tile-title">Init Time Working</h3>
+                <form action="">
+                  <div class="form-group">
+                    <label for="">Type Working</label>
+                    <select class="form-control" name="id_type_work" [(ngModel)]="id_type_work">
+                      <option *ngFor="let type_work of type_works" value="{{type_work.id_type_work}}" >{{type_work.name}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="">Project Work</label>
+                    <select class="form-control" name="id_project_work" [(ngModel)]="id_project_work">
+                      <option *ngFor="let project_work of projects_works" value="{{project_work.id_project_work}}" >{{project_work.name}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="">Observation</label>
+                    <textarea name="observation" [(ngModel)]="observation" rows="3" class="form-control"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <button class="btn btn-primary btn-block" (click)="insertTimeWorking()">Init Working</button>
+                  </div>
+                </form>
+                </div>
+            </div>
+            <div class="col-md-6" *ngIf="viewTimeWorking">
+                <div class="tile">
+                    <h3 class="tile-title">Existing Work Running</h3>
+                    <div class="card">
+                      <div class="card-header">
+                        <h5>Project: <span class="text-danger">{{openTimeWorking.name_project_work}}</span></h5>
+                        <h6>Work: <span class="text-danger">{{openTimeWorking.name_type_work}}</span></h6>
+                        <h6>Date Init: <span class="text-danger">{{openTimeWorking.date_init | date:'medium'}}</span></h6>
+                        <h4><span class="text-danger">{{hh}} : {{mm}} : {{ss}}</span></h4>
+                      </div>
+                      <div class="card-body">
+                        <form>
+                          <div class="form-group">
+                            <label>Observation:</label>
+                            <textarea class="form-control" name="observation" value="{{openTimeWorking.observation}}" rows="3"></textarea>
+                          </div>
+                          <div class="form-group">
+                            <button class="btn btn-primary btn-block" (click)="updateTimeWorking()">Finish Working</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>

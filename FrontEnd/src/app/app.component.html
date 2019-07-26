@@ -1,0 +1,10 @@
+<div #Dapp class="app sidebar-mini rtl pace-done">
+    <app-header (eventClick)="eventHeader($event)"></app-header>
+    <app-menu (eventClickMenu)="eventMenu($event)"></app-menu>
+    <div>
+        <app-home *ngIf="viewContainer == 'dashboard'"></app-home>
+        <app-time-working *ngIf="viewContainer == 'time-working'"></app-time-working>
+        <app-type-work *ngIf="viewContainer == 'type-work'"></app-type-work>
+        <app-projects-work *ngIf="viewContainer == 'projects-work'"></app-projects-work>
+    </div>
+</div>
