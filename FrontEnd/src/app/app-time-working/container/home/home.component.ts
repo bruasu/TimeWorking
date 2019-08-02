@@ -53,8 +53,8 @@ export class HomeComponent implements OnInit {
   getStringDate(TimeSecond: number){
 
       let ss = TimeSecond % 60;
-      let mm = Math.round((TimeSecond / 60) % 60);
-      let hh = Math.round((TimeSecond / 60) / 60);
+      let mm = Math.floor((TimeSecond % 3600) / 60);
+      let hh = Math.floor(TimeSecond / 3600);
 
       return `${hh} : ${mm} : ${ss}`;
   }
