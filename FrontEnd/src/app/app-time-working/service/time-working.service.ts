@@ -23,8 +23,7 @@ export class TimeWorkingService extends CONSTANT{
   checkOpenTimeWorking(): Observable<any>{
     return this.http.get(this.SERVER_API+"/api/time_working/checkOpen");
   }
-  getTimeWorkingAllSeconds(): Observable<any>{
-    return this.http.get(this.SERVER_API+"/api/time_working/AllTimeSeconds");
+  getDashboard(): Observable<any>{
+    return this.http.get(this.SERVER_API+"/api/time_working/dashboard")
   }
-
 }

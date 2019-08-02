@@ -29,8 +29,50 @@ class time_working extends Time_working{
             fun(err, rows, fields);
         });
     }
-    getTimeWorkingAll_Second(fun){
+    getTimeAll_Second(fun){
         let query = "SELECT sum(TIMESTAMPDIFF(SECOND, date_init, date_finish)) as time FROM time_working";
+        this.mysqlConnection.query(query, (err, rows, fields) => {
+            fun(err, rows, fields);
+        });
+    }
+    getTimeWorkingAndStudentsDay_Second(fun){
+        let query = "SELECT sum(TIMESTAMPDIFF(SECOND, date_init, date_finish)) as time FROM time_working WHERE DATE(date_init) = CURRENT_DATE()";
+        this.mysqlConnection.query(query, (err, rows, fields) => {
+            fun(err, rows, fields);
+        });
+    }
+    getTimeWorkingDay_Second(fun){
+        let query = "SELECT sum(TIMESTAMPDIFF(SECOND, time_working.date_init, time_working.date_finish)) as time FROM time_working inner join projects_work on projects_work.id_project_work = time_working.projects_work_id_project_work where projects_work.name != 'Student Online' and DATE(time_working.date_init) = CURRENT_DATE()";
+        this.mysqlConnection.query(query, (err, rows, fields) => {
+            fun(err, rows, fields);
+        });
+    }
+    getTimeStudentDay_Second(fun){
+        let query = "SELECT sum(TIMESTAMPDIFF(SECOND, time_working.date_init, time_working.date_finish)) as time FROM time_working inner join projects_work on projects_work.id_project_work = time_working.projects_work_id_project_work where projects_work.name = 'Student Online' and DATE(time_working.date_init) = CURRENT_DATE()";
+        this.mysqlConnection.query(query, (err, rows, fields) => {
+            fun(err, rows, fields);
+        });
+    }
+    getTimeStudentsAll_Second(fun){
+        let query = "SELECT sum(TIMESTAMPDIFF(SECOND, time_working.date_init, time_working.date_finish)) as time FROM time_working inner join projects_work on projects_work.id_project_work = time_working.projects_work_id_project_work where projects_work.name = 'Student Online'";
+        this.mysqlConnection.query(query, (err, rows, fields) => {
+            fun(err, rows, fields);
+        });
+    }
+    getTimeWorkingAll_Second(fun){
+        let query = "SELECT sum(TIMESTAMPDIFF(SECOND, time_working.date_init, time_working.date_finish)) as time FROM time_working inner join projects_work on projects_work.id_project_work = time_working.projects_work_id_project_work where projects_work.name != 'Student Online'";
+        this.mysqlConnection.query(query, (err, rows, fields) => {
+            fun(err, rows, fields);
+        });
+    }
+    getCountWorkAll(fun){
+        let query = "SELECT count(*) as countAll FROM `time_working`";
+        this.mysqlConnection.query(query, (err, rows, fields) => {
+            fun(err, rows, fields);
+        });
+    }
+    getCountWorkDay(fun){
+        let query = "SELECT count(*) as countDay FROM `time_working` WHERE DATE(date_init) = CURRENT_DATE()";
         this.mysqlConnection.query(query, (err, rows, fields) => {
             fun(err, rows, fields);
         });

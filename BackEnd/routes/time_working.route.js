@@ -6,15 +6,6 @@ router.get('/:value', (req, res) => {
 const time_working = new Time_working();
 const value = req.params.value;
 
-if(value == "all"){
-    time_working.selectTime_working((err, rows, fields) => {
-       if(rows){
-           res.json(rows);
-       }else{
-           res.status(400).json(err);
-       }
-    });
-}
 if(value == "checkOpen"){
     time_working.checkOpenTimeWorking((err, rows, fields) => {
         if(rows){
@@ -24,14 +15,86 @@ if(value == "checkOpen"){
         }
     });
 }
-if(value == "AllTimeSeconds"){
-    time_working.getTimeWorkingAll_Second((err, rows, fields) => {
+if(value == "dashboard"){
+    let date = {};
+    let countSearch = 0;
+    let countAll = 8;
+
+    time_working.getCountWorkAll((err, rows, fields) => {
         if(rows){
-            res.json(rows[0]);
-        }else{
-            res.json.status(400).json(err);
+            date.countAll = rows[0].countAll;
+            countSearch ++;
+            verification();
         }
     });
+    time_working.getCountWorkDay((err, rows, fields) =>{
+        if(rows){
+            date.countDay = rows[0].countDay;
+            countSearch ++;
+            verification();
+        }
+    });
+    time_working.getTimeAll_Second((err, rows, fields) => {
+        if(rows){
+            date.AllTime_Second = rows[0].time;
+            countSearch ++;
+            verification();
+        }
+    });
+    time_working.getTimeWorkingAndStudentsDay_Second((err, rows, fields) => {
+        if(rows){
+            if(rows[0].time == null){
+                date.AllTimeDay_Second = 0;
+            }else{
+                date.AllTimeDay_Second = rows[0].time;
+            }
+            countSearch ++;
+            verification();
+        }
+    });
+    time_working.getTimeStudentsAll_Second((err, rows, fields) =>{
+        if(rows){
+            date.AllTimeStundent_Second = rows[0].time;
+            countSearch ++;
+            verification();
+        }
+    });
+    time_working.getTimeWorkingAll_Second((err, rows, fields) => {
+        if(rows){
+            date.AllTimeWorking_Second = rows[0].time;
+            countSearch ++;
+            verification();
+        }
+    });
+    time_working.getTimeWorkingDay_Second((err, rows, fields) => {
+        if(rows){
+            if(rows[0].time == null){
+                date.AllTimeWorkingDay_Second = 0;
+            }else{
+                date.AllTimeWorkingDay_Second = rows[0].time;
+            }
+            countSearch ++;
+            verification();
+        }
+    });
+    time_working.getTimeStudentDay_Second((err, rows, fields) => {
+        if(rows){
+            if(rows[0].time == null){
+                date.AllTimeStudentDay_Second = 0;
+            }else{
+                date.AllTimeStudentDay_Second = rows[0].time;
+            }
+            countSearch ++;
+            verification();
+        }
+    });
+
+    function verification(){
+        if(countSearch == countAll){
+            res.json(date);
+        }
+    }
+    verification();
 }
 });
 

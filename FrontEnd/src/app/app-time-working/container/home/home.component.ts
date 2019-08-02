@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TimeWorkingService } from '../../service/time-working.service';
+import { Dashboard } from '../../interface/dashboard';
 
 @Component({
   selector: 'app-home',
@@ -8,32 +9,53 @@ import { TimeWorkingService } from '../../service/time-working.service';
 })
 export class HomeComponent implements OnInit {
 
-  allTimeSeconds: number;
-  allTimePrint: string;
+  datas: Dashboard;
 
+  countAll: any;
+  countDay: any;
+  AllTime: string;
+  AllTimeDay: string;
+  AllTimeStundent: string;
+  AllTimeWorking: string;
+  AllTimeWorkingDay: string;
+  AllTimeStudentDay: string;
+
+  
+  
   constructor(
     private ServiceTimeWorking: TimeWorkingService
   ) { }
-
+  
   ngOnInit() {
-    this.getTimeWorkAll();
+    this.getDatasServer();
   }
-  getTimeWorkAll(){
-    this.ServiceTimeWorking.getTimeWorkingAllSeconds().subscribe((response) => {
-      if(response.time){
-        this.allTimeSeconds = response.time;
-
-        let ss = this.allTimeSeconds % 60;
-        let mm = Math.round((this.allTimeSeconds / 60) % 60);
-        let hh = Math.round((this.allTimeSeconds / 60) / 60);
+  setValuesDashboard(){
+    this.countAll = this.datas.countAll;
+    this.countDay = this.datas.countDay;
+    this.AllTime = this.getStringDate(this.datas.AllTime_Second);
+    this.AllTimeDay = this.getStringDate(this.datas.AllTimeDay_Second);
+    this.AllTimeStundent = this.getStringDate(this.datas.AllTimeStundent_Second);
+    this.AllTimeWorking = this.getStringDate(this.datas.AllTimeWorking_Second);
+    this.AllTimeWorkingDay = this.getStringDate(this.datas.AllTimeWorkingDay_Second);
+    this.AllTimeStudentDay = this.getStringDate(this.datas.AllTimeStudentDay_Second);
     
-        this.allTimePrint = `${hh} : ${mm} : ${ss}`;
-      }
+  }
+  getDatasServer(){
+    this.ServiceTimeWorking.getDashboard().subscribe((response) =>{
+      this.datas = response;
+      this.setValuesDashboard();
     },
     (err) =>{
       console.log(err);
     });
 
   }
+  getStringDate(TimeSecond: number){
 
+      let ss = TimeSecond % 60;
+      let mm = Math.round((TimeSecond / 60) % 60);
+      let hh = Math.round((TimeSecond / 60) / 60);
+
+      return `${hh} : ${mm} : ${ss}`;
+  }
 }

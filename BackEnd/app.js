@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
+const path = require('path');
 
 //middlewares
 
@@ -24,4 +25,12 @@ app.use('/api/time_working', require('./routes/time_working.route'));
 
 app.listen(app.get('port'), () => {
     console.log('Start Server on port: '+ app.get('port'));
+});
+
+//init static
+const app2 = express();
+app2.use(express.static(path.join(__dirname, 'work')));
+app2.set('port', process.env.PORT || 1200);
+app2.listen(app2.get('port'), () => {
+    console.log('Start Static on port: '+ app2.get('port'));
 });

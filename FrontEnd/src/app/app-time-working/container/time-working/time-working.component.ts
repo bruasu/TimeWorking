@@ -108,6 +108,7 @@ export class TimeWorkingComponent implements OnInit {
     this.ServiceTime_working.updateTimeWorking(data).subscribe((response) => {
       if(response.update){
         this.viewTimeWorking = false;
+        this.observation = '';
       }
     }, 
     (err) => {
